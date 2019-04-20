@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, InputBase, IconButton } from '@material-ui
 import { Refresh, Search } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
     search: {
@@ -97,6 +98,7 @@ class RssAppBar extends React.PureComponent {
                         <div className={classes.barcontent}>
                             <div className={classes.grow} />
                             { (this.props.title === 'Home' || this.props.title === 'Saved For Later') && <SearchBar classes={classes} />}
+                            <div className={classes.grow} />
                             { this.props.title === 'Home' && <IconsBar classes={classes} />}
                         </div>
                     </Toolbar>
@@ -106,4 +108,6 @@ class RssAppBar extends React.PureComponent {
     }
 }
 
-export default withStyles(styles)(RssAppBar);
+const mapStateToProps = state => ({ title: state.page.onglet });
+
+export default connect(mapStateToProps)(withStyles(styles)(RssAppBar));

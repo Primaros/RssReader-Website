@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import  { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
 import { Home, TurnedIn, Add, Menu, ArrowRight } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
+import { changeOnglet, changeSubOnglet } from '../redux/actions/pageActions'
 
 const drawerWidth = 240
 
@@ -55,12 +57,14 @@ class RssDrawer extends React.PureComponent {
     render() {
         return (
             <Drawer variant="persistent" anchor="left" open={true} className={this.classes.drawer}>
-                <RssList list={this.listTop} handler={this.props.changeOnlget} selected={this.props.onglet} />
+                <RssList list={this.listTop} handler={changeOnglet} selected={this.props.onglet} />
                 <Divider />
-                {this.props.onglet === "Home" && <RssList list={this.listHome} handler={this.props.changeSubOnlget} selected={this.props.subOnglet} />}
+                {this.props.onglet === "Home" && <RssList list={this.listHome} handler={changeSubOnglet} selected={this.props.subOnglet} />}
             </Drawer>
         )
     }
 }
 
-export default withStyles(styles)(RssDrawer);
+const mapStateToProps = state => ({ onglet: state.page.onglet, subOnglet : state.page.subOnglet });
+
+export default connect(mapStateToProps)(withStyles(styles)(RssDrawer));
